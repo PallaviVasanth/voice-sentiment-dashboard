@@ -18,8 +18,9 @@ if audio_file:
     sentiment = TextBlob(text).sentiment.polarity
 
     if sentiment > 0:
-        st.success("Positive 😊")
+        st.success("Positive")
     elif sentiment < 0:
-        st.error("Negative 😠")
+        st.error("Negative")
     else:
-        st.info("Neutral 😐")
+        st.info("Neutral")
+
