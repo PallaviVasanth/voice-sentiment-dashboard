@@ -36,3 +36,17 @@ This is a simple web-based mini project that allows users to record voice input 
 - Requires an internet connection for speech recognition.
 - Ensure your microphone is enabled and permissions are granted.
 - This is a beginner-friendly project; code is commented for clarity.
+
+## Output Screenshots
+
+### Home Page
+![Home](screenshots/home.png)
+
+### Positive Sentiment
+![Positive](screenshots/positive.png)
+
+### Negative Sentiment
+![Negative](screenshots/negative.png)
+
+### Neutral Sentiment
+![Neutral](screenshots/neutral.png)
