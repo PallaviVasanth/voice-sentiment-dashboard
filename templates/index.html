@@ -1,1 +1,120 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-Based Sentiment Analysis Dashboard</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff, #f5f7ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 18px;
+            width: 420px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 12px 22px;
+            font-size: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #results {
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        #detectedText {
+            background: #f3f4f8;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .positive { color: #2ecc71; font-weight: bold; }
+        .negative { color: #e74c3c; font-weight: bold; }
+        .neutral { color: #f39c12; font-weight: bold; }
+        .error { color: red; }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>🎤 Voice Sentiment Analyzer</h1>
+    <p>Click "Start Recording" and speak into your microphone. Results will appear below.</p>
+
+    <button id="recordBtn">Start Recording</button>
+
+    <div id="results" style="display: none;">
+        <h3>Detected Text:</h3>
+        <p id="detectedText"></p>
+
+        <h3>Sentiment Result:</h3>
+        <p id="sentimentResult"></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('recordBtn').addEventListener('click', function() {
+        this.disabled = true;
+        this.textContent = 'Recording...';
+
+        fetch('/record', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('detectedText').textContent = data.text;
+            const sentimentEl = document.getElementById('sentimentResult');
+            sentimentEl.textContent = data.sentiment;
+            sentimentEl.className = data.sentiment.toLowerCase();
+
+            document.getElementById('results').style.display = 'block';
+
+            document.getElementById('recordBtn').disabled = false;
+            document.getElementById('recordBtn').textContent = 'Start Recording';
+        })
+        .catch(error => {
+            alert('An error occurred: ' + error.message);
+            document.getElementById('recordBtn').disabled = false;
+            document.getElementById('recordBtn').textContent = 'Start Recording';
+        });
+    });
+</script>
+
+</body>
+</html>
