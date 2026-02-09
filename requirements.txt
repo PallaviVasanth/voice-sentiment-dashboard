@@ -1,7 +1,4 @@
-Flask==2.3.3
-SpeechRecognition==3.10.0
-TextBlob==0.17.1
-gunicorn==21.2.0
 streamlit
-
-
+textblob
+SpeechRecognition
+pydub
